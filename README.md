@@ -38,3 +38,28 @@ docker-compose up -d --force-recreate
 ### RabbitMQ management
 [http://localhost:15672/](http://localhost:15672/) **[guest:guest]**
 
+### Run migration and fixtures
+```bash
+#You have to find ID_CONTAINER run command docker ps -a
+docker-compose exec -it ID_CONTAINER_auth-service_auth-backend bin/console doctrine:migrations:migrate 
+docker-compose exec -it ID_CONTAINER_auth-service_auth-backend bin/console doctrine:fixtures:load
+```
+
+### Run messenger consumer
+```bash
+#You have to find ID_CONTAINER run command docker ps -a
+docker-compose exec -it ID_CONTAINER_auth-service_auth-backend bin/console messenger:consume-messages 
+```
+
+# how to work
+
+### login
+http://localhost/api/login
+
+### track user activity
+http://localhost/api/track/{slug}
+
+Example: {slug} - click-red-button
+
+### Find log
+/public/tracker/tracker.json
